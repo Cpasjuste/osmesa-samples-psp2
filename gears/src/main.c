@@ -46,8 +46,7 @@ int glutGet(GLenum state) {
 static GLint T0 = 0;
 static GLint Frames = 0;
 static GLint autoexit = 0;
-static GLfloat viewDist = 40.0;
-
+static GLfloat viewDist = 60.0;
 
 /**
 
