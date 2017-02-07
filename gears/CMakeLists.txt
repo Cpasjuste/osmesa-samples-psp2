@@ -56,6 +56,7 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
         psp2shell SceAppMgr_stub SceNet_stub SceNetCtl_stub
         vita2d SceDisplay_stub SceGxm_stub SceSysmodule_stub
+        ScePower_stub
         OSMesa
         GLU
         ssl

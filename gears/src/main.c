@@ -5,6 +5,7 @@
 #include <sys/time.h>
 #include <GL/osmesa.h>
 
+#include <psp2/power.h>
 #include <psp2/kernel/threadmgr.h>
 #include <psp2/kernel/processmgr.h>
 #include <vita2d.h>
@@ -380,6 +381,12 @@ int main(int argc, char *argv[]) {
 
     psp2shell_init(3333, 5);
     printf("Hello, (GL)world!\n");
+
+    // wee need max performances here
+    scePowerSetArmClockFrequency(444);
+    scePowerSetBusClockFrequency(222);
+    scePowerSetGpuClockFrequency(222);
+    scePowerSetGpuXbarClockFrequency(166);
 
     gl_init(WIDTH, HEIGHT);
 
