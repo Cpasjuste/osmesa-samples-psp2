@@ -341,7 +341,7 @@ static void gl_swap() {
 
     vita2d_start_drawing();
     vita2d_clear_screen();
-    vita2d_draw_texture_rotate(vtex, WIDTH / 2, HEIGHT / 2, 180 * 0.0174532925f);
+    vita2d_draw_texture_scale_rotate(vtex, WIDTH / 2, HEIGHT / 2, -1, 1, 180 * 0.0174532925f);
     vita2d_end_drawing();
     vita2d_wait_rendering_done();
     vita2d_swap_buffers();
