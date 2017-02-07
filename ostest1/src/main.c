@@ -289,9 +289,6 @@ static GLboolean render_scene() {
     render_image();
     render_gradient();
 
-    /* Make sure buffered commands are finished! */
-    glFinish();
-
     return 1;
 }
 
@@ -337,10 +334,15 @@ static int gl_init(int w, int h) {
     return 1;
 }
 
-static void gl_flip() {
+static void gl_swap() {
+
+    /* Make sure buffered commands are finished! */
+    glFinish();
 
     vita2d_start_drawing();
+    vita2d_clear_screen();
     vita2d_draw_texture(vtex, 0, 0);
+    vita2d_wait_rendering_done();
     vita2d_end_drawing();
     vita2d_swap_buffers();
 }
@@ -364,7 +366,7 @@ int main(int argc, char *argv[]) {
 
     gl_init(WIDTH, HEIGHT);
     render_scene();
-    gl_flip();
+    gl_swap();
 
     sceKernelDelayThread(100 * 1000000);
 

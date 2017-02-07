@@ -4,4 +4,4 @@ cmake_minimum_required(VERSION 2.8)
 set(VITASDK /usr/local/vitasdk)
 
 add_subdirectory(ostest1)
-
+add_subdirectory(gears)
