@@ -304,7 +304,7 @@ static int gl_init(int w, int h) {
     }
 
     vita2d_init();
-    vtex = vita2d_create_empty_texture_format(w, h, SCE_GXM_TEXTURE_FORMAT_A8R8G8B8);
+    vtex = vita2d_create_empty_texture_format(w, h, SCE_GXM_TEXTURE_BASE_FORMAT_U8U8U8U8);
     void *buffer = vita2d_texture_get_datap(vtex);
 
     /* Bind the buffer to the context and make it current */
@@ -341,9 +341,9 @@ static void gl_swap() {
 
     vita2d_start_drawing();
     vita2d_clear_screen();
-    vita2d_draw_texture(vtex, 0, 0);
-    vita2d_wait_rendering_done();
+    vita2d_draw_texture_rotate(vtex, WIDTH / 2, HEIGHT / 2, 180 * 0.0174532925f);
     vita2d_end_drawing();
+    vita2d_wait_rendering_done();
     vita2d_swap_buffers();
 }
 
