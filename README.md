@@ -1,6 +1,7 @@
 # osmesa-samples-psp2
 mesa os (of screen) renderer samples for the ps vita
 
+Deps : openssl
 
 >- git clone https://github.com/Cpasjuste/osmesa-psp2.git
 >- cd osmesa-psp2
