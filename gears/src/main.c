@@ -4,13 +4,11 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <GL/osmesa.h>
-#include <GL/glu.h>
 
 #include <psp2/kernel/threadmgr.h>
 #include <psp2/kernel/processmgr.h>
 #include <vita2d.h>
 #include <psp2shell.h>
-#include <string.h>
 
 #define printf psp2shell_print
 
@@ -48,9 +46,6 @@ int glutGet(GLenum state) {
 static GLint T0 = 0;
 static GLint Frames = 0;
 static GLint autoexit = 0;
-static GLint win = 0;
-static GLboolean Visible = GL_TRUE;
-static GLboolean Animate = GL_TRUE;
 static GLfloat viewDist = 40.0;
 
 
@@ -193,7 +188,6 @@ cleanup(void) {
     glDeleteLists(gear1, 1);
     glDeleteLists(gear2, 1);
     glDeleteLists(gear3, 1);
-    //glutDestroyWindow(win);
 }
 
 static void
@@ -228,7 +222,6 @@ draw(void) {
 
     glPopMatrix();
 
-    //glutSwapBuffers();
     gl_swap();
 
     Frames++;
@@ -262,76 +255,6 @@ idle(void) {
 
     angle += 70.0 * dt;  /* 70 degrees per second */
     angle = fmod(angle, 360.0); /* prevents eventual overflow */
-
-    //glutPostRedisplay();
-}
-
-static void
-update_idle_func(void) {
-    /*
-    if (Visible && Animate)
-        glutIdleFunc(idle);
-    else
-        glutIdleFunc(NULL);
-    */
-}
-
-/* change view angle, exit upon ESC */
-/* ARGSUSED1 */
-static void
-key(unsigned char k, int x, int y) {
-    /*
-    switch (k) {
-        case 'z':
-            view_rotz += 5.0;
-            break;
-        case 'Z':
-            view_rotz -= 5.0;
-            break;
-        case 'd':
-            viewDist += 1.0;
-            break;
-        case 'D':
-            viewDist -= 1.0;
-            break;
-        case 'a':
-            Animate = !Animate;
-            update_idle_func();
-            break;
-        case 27:  // Escape
-            cleanup();
-            exit(0);
-            break;
-        default:
-            return;
-    }
-    glutPostRedisplay();
-    */
-}
-
-/* change view angle */
-/* ARGSUSED1 */
-static void
-special(int k, int x, int y) {
-    /*
-    switch (k) {
-        case GLUT_KEY_UP:
-            view_rotx += 5.0;
-            break;
-        case GLUT_KEY_DOWN:
-            view_rotx -= 5.0;
-            break;
-        case GLUT_KEY_LEFT:
-            view_roty += 5.0;
-            break;
-        case GLUT_KEY_RIGHT:
-            view_roty -= 5.0;
-            break;
-        default:
-            return;
-    }
-    glutPostRedisplay();
-    */
 }
 
 /* new window size or exposure */
@@ -347,7 +270,7 @@ reshape(int width, int height) {
 }
 
 static void
-init(int argc, char *argv[]) {
+init() {
     static GLfloat pos[4] = {5.0, 5.0, 10.0, 0.0};
     static GLfloat red[4] = {0.8, 0.1, 0.0, 1.0};
     static GLfloat green[4] = {0.0, 0.8, 0.2, 1.0};
@@ -385,30 +308,6 @@ init(int argc, char *argv[]) {
     printf("GL_VERSION    = %s\n", (char *) glGetString(GL_VERSION));
     printf("GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
     printf("GL_EXTENSIONS = %s\n", (char *) glGetString(GL_EXTENSIONS));
-    /*
-    for ( i=1; i<argc; i++ ) {
-        if (strcmp(argv[i], "-info")==0) {
-            printf("GL_RENDERER   = %s\n", (char *) glGetString(GL_RENDERER));
-            printf("GL_VERSION    = %s\n", (char *) glGetString(GL_VERSION));
-            printf("GL_VENDOR     = %s\n", (char *) glGetString(GL_VENDOR));
-            printf("GL_EXTENSIONS = %s\n", (char *) glGetString(GL_EXTENSIONS));
-        }
-        else if ( strcmp(argv[i], "-exit")==0) {
-            autoexit = 30;
-            printf("Auto Exit after %i seconds.\n", autoexit );
-        }
-        else if (strcmp(argv[i], "-noanim") == 0) {
-            Animate = GL_FALSE;
-        }
-    }
-    */
-}
-
-
-static void
-visible(int vis) {
-    Visible = vis;
-    update_idle_func();
 }
 
 static int gl_init(int w, int h) {
@@ -485,8 +384,7 @@ int main(int argc, char *argv[]) {
 
     gl_init(WIDTH, HEIGHT);
 
-    reshape(WIDTH, HEIGHT);
-    init(argc, argv);
+    init();
     reshape(WIDTH, HEIGHT);
 
     gettimeofday(&start, NULL);
